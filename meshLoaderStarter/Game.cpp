@@ -38,6 +38,8 @@ void Game::Load()
 	Mesh& quadMesh = BuildQuad(d3d.GetMeshMgr());
 	Mesh& cubeMesh = BuildCube(d3d.GetMeshMgr());
 	Mesh& sm = d3d.GetMeshMgr().CreateMesh("dragon");
+	Mesh& otherMesh = d3d.GetMeshMgr().CreateMesh("other");
+
 
 
 	//textured lit box
@@ -104,12 +106,18 @@ void Game::Load()
 	//the sun
 	d3d.GetFX().SetupDirectionalLight(0, true, Vector3(-0.7f, -0.7f, 0.7f), Vector3(0.47f, 0.47f, 0.47f), Vector3(0.15f, 0.15f, 0.15f), Vector3(0.25f, 0.25f, 0.25f));
 
-	//the suck
+	//the dragon
 	sm.CreateFrom("data/dragon/Dragon.X", d3d);
-	Setup(mModels[Modelid::DRAGON], sm, 0.0005f, Vector3(0, 0, -2), Vector3(PI / 2.f, 0, 0));
-	mModels[Modelid::DRAGON].GetRotation().y = D2R(180);
-	mModels[Modelid::DRAGON].GetRotation().x = D2R(359);
+	Setup(mModels[Modelid::DRAGON], sm, 0.0005f, Vector3(0, 0, -2), Vector3(0, 0, 0));
+	
 
+	//the other one (DJ Kahlid)
+	otherMesh.CreateFrom("data/snakeStuff/apple.fbx", d3d);
+	Setup(mModels[Modelid::OTHER], otherMesh, 0.5f, Vector3(0, 1, -2), Vector3(0, 0, 0));
+
+	mat = mModels[Modelid::OTHER].GetMesh().GetSubMesh(0).material;
+	mat.gfxData.Set(Vector4(1, 0.f, 0.f, 0), Vector4(1, 0.5f, 0.5f, 0), Vector4(1, 1, 1, 1));
+	mModels[Modelid::OTHER].SetOverrideMat(&mat);
 
 
 }
@@ -149,6 +157,7 @@ void Game::Update(float dTime)
 
 
 	mModels[Modelid::DRAGON].GetRotation().y = mAngle * 2;
+	mModels[Modelid::OTHER].GetRotation().y = -mAngle * 2;
 
 }
 
