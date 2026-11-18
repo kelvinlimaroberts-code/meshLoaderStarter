@@ -34,9 +34,11 @@ void Game::Load()
 	//create an array of TOTAL models
 	Model m;
 	mModels.insert(mModels.begin(), Modelid::TOTAL, m);
-	//get a quad and cube mesh ready
+	//get a quad and cube mesh ready. also the dragon
 	Mesh& quadMesh = BuildQuad(d3d.GetMeshMgr());
 	Mesh& cubeMesh = BuildCube(d3d.GetMeshMgr());
+	Mesh& sm = d3d.GetMeshMgr().CreateMesh("dragon");
+
 
 	//textured lit box
 	mModels[Modelid::BOX].Initialise(cubeMesh);
@@ -101,6 +103,15 @@ void Game::Load()
 
 	//the sun
 	d3d.GetFX().SetupDirectionalLight(0, true, Vector3(-0.7f, -0.7f, 0.7f), Vector3(0.47f, 0.47f, 0.47f), Vector3(0.15f, 0.15f, 0.15f), Vector3(0.25f, 0.25f, 0.25f));
+
+	//the suck
+	sm.CreateFrom("data/dragon/Dragon.X", d3d);
+	Setup(mModels[Modelid::DRAGON], sm, 0.0005f, Vector3(0, 0, -2), Vector3(PI / 2.f, 0, 0));
+	mModels[Modelid::DRAGON].GetRotation().y = D2R(180);
+	mModels[Modelid::DRAGON].GetRotation().x = D2R(359);
+
+
+
 }
 
 void Game::Initialise()
@@ -135,6 +146,10 @@ void Game::Update(float dTime)
 
 	mModels[Modelid::WINDOW].GetRotation().y = -mAngle * 0.5f;
 	mModels[Modelid::WINDOW2].GetRotation().y = -mAngle * 0.5f;
+
+
+	mModels[Modelid::DRAGON].GetRotation().y = mAngle * 2;
+
 }
 
 void Game::Render(float dTime)
