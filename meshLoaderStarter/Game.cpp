@@ -112,11 +112,12 @@ void Game::Load()
 	
 
 	//the other one (DJ Kahlid)
-	otherMesh.CreateFrom("data/snakeStuff/apple.fbx", d3d);
+	otherMesh.CreateFrom("data/snakeStuff/sphere.obj", d3d);
 	Setup(mModels[Modelid::OTHER], otherMesh, 0.5f, Vector3(0, 1, -2), Vector3(0, 0, 0));
 
 	mat = mModels[Modelid::OTHER].GetMesh().GetSubMesh(0).material;
-	mat.gfxData.Set(Vector4(1, 0.f, 0.f, 0), Vector4(1, 0.5f, 0.5f, 0), Vector4(1, 1, 1, 1));
+	//mat.gfxData.Set(Vector4(1, 0.f, 0.f, 0), Vector4(1, 0.5f, 0.5f, 0), Vector4(1, 1, 1, 1)); //red
+	mat.gfxData.Set(Vector4(0.2f, 0.9f, 0.2f, 0), Vector4(0.4f, 0.9f, 0.7f, 0), Vector4(0.5f, 0.7f, 0.7f, 1)); //green
 	mModels[Modelid::OTHER].SetOverrideMat(&mat);
 
 
